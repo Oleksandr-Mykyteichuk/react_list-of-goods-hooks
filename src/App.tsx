@@ -16,18 +16,18 @@ export const goodsFromServer = [
 ];
 
 enum SortType {
-  Alphabeticallyl = 'Alphabeticallyl',
+  Alphabetically = 'Alphabetically',
   ByLength = 'ByLength',
   Start = '',
 }
 
-function letSortGoods(goods: string[], sortFild: SortType) {
+function sortByGoods(goods: string[], sortFild: SortType) {
   const visibleGood = [...goods];
 
   if (sortFild) {
     visibleGood.sort((good1, good2) => {
       switch (sortFild) {
-        case SortType.Alphabeticallyl:
+        case SortType.Alphabetically:
           return good1.localeCompare(good2);
 
         case SortType.ByLength:
@@ -44,7 +44,7 @@ function letSortGoods(goods: string[], sortFild: SortType) {
 
 export const App: React.FC = () => {
   const [sortFild, setSortFild] = useState<SortType>(SortType.Start);
-  let sortGoods = letSortGoods(goodsFromServer, sortFild);
+  let sortGoods = sortByGoods(goodsFromServer, sortFild);
   const [reversed, setReversed] = useState(false);
 
   if (reversed) {
@@ -56,9 +56,9 @@ export const App: React.FC = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${sortFild === SortType.Alphabeticallyl ? '' : 'is-light'}`}
+          className={`button is-info ${sortFild === SortType.Alphabetically ? '' : 'is-light'}`}
           onClick={() => {
-            setSortFild(SortType.Alphabeticallyl);
+            setSortFild(SortType.Alphabetically);
           }}
         >
           Sort alphabetically
@@ -97,13 +97,11 @@ export const App: React.FC = () => {
       </div>
 
       <ul>
-        <ul>
-          {sortGoods.map(goods => (
-            <li data-cy="Good" key={goods}>
-              {goods}
-            </li>
-          ))}
-        </ul>
+        {sortGoods.map(goods => (
+          <li data-cy="Good" key={goods}>
+            {goods}
+          </li>
+        ))}
       </ul>
     </div>
   );
